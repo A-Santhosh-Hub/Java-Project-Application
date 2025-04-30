@@ -1,0 +1,56 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+class NumberCheckerGUI {
+    public static void main(String[] args) {
+        // Create the main frame
+        JFrame frame = new JFrame("Number Checker");
+        frame.setSize(400, 250);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(new FlowLayout());
+
+        // Components
+        JLabel label = new JLabel("Enter a number:");
+        JTextField textField = new JTextField(15);
+        JButton checkButton = new JButton("Check");
+        JTextArea resultArea = new JTextArea(5, 30);
+        resultArea.setEditable(false);
+        resultArea.setLineWrap(true);
+        resultArea.setWrapStyleWord(true);
+
+        // Add components to frame
+        frame.add(label);
+        frame.add(textField);
+        frame.add(checkButton);
+        frame.add(new JScrollPane(resultArea));
+
+        // Button action
+        checkButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String input = textField.getText();
+                try {
+                    int num = Integer.parseInt(input);
+                    StringBuilder result = new StringBuilder();
+
+                    if (num % 3 == 0 && num % 5 == 0) {
+                        result.append("This number is divisible by 3 and 5.\n");
+                        result.append("And it's maybe an odd number.");
+                    } else if (num % 2 == 0) {
+                        result.append("This number is divisible by 2.\n");
+                        result.append(num + " is maybe an even number.");
+                    } else {
+                        result.append("This number is not divisible by 2, 3, or 5.");
+                    }
+
+                    resultArea.setText(result.toString());
+                } catch (NumberFormatException ex) {
+                    resultArea.setText("Please enter a valid integer.");
+                }
+            }
+        });
+
+        // Make frame visible
+        frame.setVisible(true);
+    }
+}
