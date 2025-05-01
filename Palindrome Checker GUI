@@ -1,0 +1,63 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+class PalindromeCheckerGUI {
+    public static void main(String[] args) {
+        // Create the frame
+        JFrame frame = new JFrame("Palindrome Checker");
+        frame.setSize(400, 220);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(new FlowLayout());
+
+        // Create components
+        JLabel label = new JLabel("Enter a number:");
+        JTextField textField = new JTextField(15);
+        JButton checkButton = new JButton("Check");
+        JTextArea resultArea = new JTextArea(4, 30);
+        resultArea.setEditable(false);
+        resultArea.setLineWrap(true);
+        resultArea.setWrapStyleWord(true);
+
+        // Add components to frame
+        frame.add(label);
+        frame.add(textField);
+        frame.add(checkButton);
+        frame.add(new JScrollPane(resultArea));
+
+        // Action on button click
+        checkButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String input = textField.getText();
+                try {
+                    int num = Integer.parseInt(input);
+                    int original = num;
+                    int reversed = 0;
+
+                    while (num != 0) {
+                        reversed = reversed * 10 + num % 10;
+                        num /= 10;
+                    }
+
+                    StringBuilder result = new StringBuilder("Reversed Number: " + reversed + "\n");
+
+                    if (reversed == original) {
+                        result.append("The given number is a Palindrome.");
+                    } else {
+                        result.append("The given number is NOT a Palindrome.");
+                    }
+
+                    resultArea.setForeground(Color.BLUE);
+                    resultArea.setText(result.toString());
+
+                } catch (NumberFormatException ex) {
+                    resultArea.setForeground(Color.RED);
+                    resultArea.setText("Please enter a valid integer.");
+                }
+            }
+        });
+
+        // Make it visible
+        frame.setVisible(true);
+    }
+}
